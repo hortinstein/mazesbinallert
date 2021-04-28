@@ -11,29 +11,28 @@ const cheerio = require('cheerio');
 
 const fs = require('fs');
 
-
-
 async function send_group_text(text){
-    let rawdata = fs.readFileSync(process.argv[2]);
-    let group_data = JSON.parse(rawdata);
-    for (var key in group_data) {
-        if (group_data.hasOwnProperty(key)) {
-            console.log(group_data[key]);
+    if (process.argv.length > 2){
+        let rawdata = fs.readFileSync(process.argv[2]);
+        let group_data = JSON.parse(rawdata);
+        for (var key in group_data) {
+            if (group_data.hasOwnProperty(key)) {
+                console.log('sending text to ',key);
+                send_text(text,group_data[key]);
+            }
         }
     }
 }
 
-
 diff_data = ''
 
-
-async function send_text(text){
-    console.log("Sending Text: "+ text);
+async function send_text(text,dest_num){
+    console.log("Sending Text to "+dest_num+": "+ text);
     client.messages
     .create({
         body: text,
         from: twilioNumber,
-        to: myNumber
+        to: dest_num
     })
     .then(message => console.log(message.sid));
 }
@@ -63,9 +62,9 @@ async function check_sbins(){
 
 check_sbins();
 setInterval(check_sbins,60000);
-send_group_text("test");
-//this alerts every 12 hours to make sure you never forget about our spinny boy
-//setInterval(function fn(){send_text('MAZESBINALLERT: still running...some say hes still spinning')},60000 * 60 * 12);
+
+//this alerts every 72 hours to make sure you never forget about our spinny boy
+setInterval(function fn(){send_text('MAZESBINALLERT: still running...some say hes still spinning')},60000 * 60 * 72);
 // setInterval(function fn(){console.log("diff_data: " +diff_data)},5000);
 // setInterval(function fn(){
 //     diff_data = 'test';

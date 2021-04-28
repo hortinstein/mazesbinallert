@@ -33,4 +33,17 @@ If you did it right you should see:
 
 I fully endorse someone turning this into a SAAS product.  
 
+To send group texts to can supply a json file containing a list of recipients in the following format:
+``` sh
+#test.json
+{
+  "Kimi":    "+10000000000",
+  "Mazepin": "+80081351111"
+}
+```
+and run:
+``` sh
+node index.js test.json
+```
+
 Special thanks to [/u/scooty14](https://reddit.com/u/scooty14) for running an awesome site
