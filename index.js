@@ -7,6 +7,26 @@ const client = require('twilio')(accountSid, authToken);
 const axios = require('axios');
 const cheerio = require('cheerio');
 
+//opens up a list for the group text file
+
+const fs = require('fs');
+
+
+
+async function send_group_text(text){
+    let rawdata = fs.readFileSync(process.argv[2]);
+    let group_data = JSON.parse(rawdata);
+    for (var key in group_data) {
+        if (group_data.hasOwnProperty(key)) {
+            console.log(group_data[key]);
+        }
+    }
+}
+
+
+diff_data = ''
+
+
 async function send_text(text){
     console.log("Sending Text: "+ text);
     client.messages
@@ -33,7 +53,9 @@ async function check_sbins(){
                 diff_data = scrapedata;
                 send_text("MAZESBINALLERT INIT: "+ scrapedata + " mazespins this season");
             } else if (diff_data != scrapedata){
-                send_text("MAZESBINALLERT: HE SPUN OUT!!! " + scrapedata + " mazespins this season");
+                var text = "MAZESBINALLERT: HE SPUN OUT!!! " + scrapedata + " mazespins this season"
+                send_text(text);
+                send_group_text(text);
                 diff_data = scrapedata;
             }
         })
@@ -41,8 +63,9 @@ async function check_sbins(){
 
 check_sbins();
 setInterval(check_sbins,60000);
+send_group_text("test");
 //this alerts every 12 hours to make sure you never forget about our spinny boy
-setInterval(function fn(){send_text('MAZESBINALLERT: still running...some say hes still spinning')},60000 * 60 * 12);
+//setInterval(function fn(){send_text('MAZESBINALLERT: still running...some say hes still spinning')},60000 * 60 * 12);
 // setInterval(function fn(){console.log("diff_data: " +diff_data)},5000);
 // setInterval(function fn(){
 //     diff_data = 'test';
