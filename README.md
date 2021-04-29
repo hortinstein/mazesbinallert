@@ -41,9 +41,25 @@ To send group texts to can supply a json file containing a list of recipients in
   "Mazepin": "+80081351111"
 }
 ```
-and run:
+
 ``` sh
-node index.js test.json
+#config.json
+{
+  "accountSid":    "ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "authToken": "your_auth_token",
+  "twilioNumber":"+10000000000",
+  "myNumber":"+10000000000"
+}
 ```
 
+
+and run:
+``` sh
+node index.js --grouplist test.json --config config.json
+```
+
+
+
 Special thanks to [/u/scooty14](https://reddit.com/u/scooty14) for running an awesome site
+
+![спwеинек](https://preview.redd.it/x5vh5ucovjv61.png?width=1024&auto=webp&s=d223c24f526295c3e8084b5291daf79b71479da0)

@@ -24,6 +24,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.6",
+    "minimist": "^1.2.5",
     "twilio": "^3.60.0"
   }
 }
